@@ -1,10 +1,11 @@
 {
   "n": 20,
-  "p50_ms": 184.7,
-  "p95_ms": 5110.5,
-  "avg_cost_usd": 0.000155,
-  "avg_tokens": 444.6,
-  "fallbacks": 17,
+  "failed_requests": 0,
+  "p50_ms": 3197.1,
+  "p95_ms": 6023.1,
+  "avg_cost_usd": 0.000935,
+  "avg_tokens": 2891.1,
+  "fallbacks": 5,
   "plans_with_rule_errors": 0,
   "model": "openai/gpt-oss-120b"
 }

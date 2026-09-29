@@ -36,7 +36,7 @@ Human review of each plan against its SIIS article (`data/eval/manual_review.jso
 | :--- | :--- | :--- | :--- |
 | Cache hit - exact query match (N=40) | <= 300 ms | 0.1 | 0.1 |
 | Cache hit - unseen semantic paraphrase (N=60) | <= 300 ms | 32.8 | 39.3 |
-| Cold query - full pipeline extraction & mapping (N=20) | <= 8000 ms | 184.7 | 5110.5 |
+| Cold query - full pipeline extraction & mapping (N=20) | <= 8000 ms | 3197.1 | 6023.1 |
 
 End-to-end over HTTP (`scripts/stress_test.py`): exact-hit P95 5.6 ms, paraphrase-hit P95 45.9 ms, 160 concurrent requests with 8 workers at 29.6 req/s (P95 393.3 ms); problems: {'non_json': 0, 'http_errors': 0, 'schema_invalid': 0, 'rule_errors': 0, 'url_leaks': 0}; API healthy 5.1 s after launch.
 
@@ -46,7 +46,7 @@ End-to-end over HTTP (`scripts/stress_test.py`): exact-hit P95 5.6 ms, paraphras
 
 | Metric Item | Target | Measured Value |
 | :--- | :--- | :--- |
-| Cold query average inference cost | Tracked | $0.00015 (444.6 tokens) |
+| Cold query average inference cost | Tracked | $0.00093 (2891.1 tokens) |
 | Cache hit inference cost | $0.00 | $0.00 |
 | Semantic cache hit rate (on unseen paraphrases) | >= 80% | 86.3% (wrong-plan hits: 0, false hits: 0) |
 | Cost derivation method | - | (prompt tokens x $0.15/M + completion tokens x $0.6/M) |
@@ -61,9 +61,9 @@ as the lowest threshold with zero wrong-plan and zero false hits.
 | Architecture Variant | Step Accuracy | Latency (P95) | Cost / Query | Key Observations |
 | :--- | :--- | :--- | :--- | :--- |
 | Baseline: Full LLM Deeplink Mapping | not run | - | - | Deliberately avoided: URIs are masked tokens, so letting the LLM pick them risks invented or altered URIs (rule 4.2.2). |
-| Variant A: Hybrid BM25 + Dense Retrieval (ours, + exact-name gate) | _score in data/eval/manual_review.json_ | 5110.5 ms cold | $0.00015 | Rule compliance 100.0%. Retrieval proposes candidates; a word-order-aware name gate accepts only the exact screen named in the steps. |
+| Variant A: Hybrid BM25 + Dense Retrieval (ours, + exact-name gate) | _score in data/eval/manual_review.json_ | 6023.1 ms cold | $0.00093 | Rule compliance 100.0%. Retrieval proposes candidates; a word-order-aware name gate accepts only the exact screen named in the steps. |
 | Variant A': hybrid retrieval top-1, no name gate | - | same | same | Top-1 agreed with ours on 2/7 auto actions; in 5 cases top-1 names no screen in the steps (decoys like "Easy mode" for "Super steady mode"). |
-| Variant B: Pure Rules-Based (offline extractor) | - | 708.6 ms | $0.00 | Rule compliance 100.0%, 20 plans. Free and deterministic but coarse: section headings become actions. |
+| Variant B: Pure Rules-Based (offline extractor) | - | 714.3 ms | $0.00 | Rule compliance 100.0%, 20 plans. Free and deterministic but coarse: section headings become actions. |
 
 ---
 
