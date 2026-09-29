@@ -100,3 +100,23 @@ data/                catalog, SIIS articles, inputs, held-out paraphrases
 
 - **Rayasam Amarnath:** architecture; LLM extraction, validators and grounding; deeplink retrieval, mapping and ordering; semantic cache and engine; benchmarks, metrics and documentation.
 - **Neeraj Prasad:** REST API, demo console, Docker deployment, and end-to-end API, stress and cold-path test scripts.
+
+## Demo & Presentation
+
+- **Demo video:** [Watch on YouTube](<your-video-link>)
+- **Presentation:** [docs/Smart_Guided_Troubleshooting_Engine.pptx](docs/Smart_Guided_Troubleshooting_Engine.pptx) ([PDF](docs/Smart_Guided_Troubleshooting_Engine.pdf))
+
+## Run with Docker
+
+```bash
+docker build -t smart-troubleshooting-engine .
+docker run -p 8000:8000 --env-file .env smart-troubleshooting-engine
+```
+
+Then open http://127.0.0.1:8000 (demo console) or http://127.0.0.1:8000/docs (API docs).
+The image includes CPU-only PyTorch and the embedding model, so it starts without downloading anything.
+
+## AI Usage Disclosure
+
+- **Inside the engine:** `openai/gpt-oss-120b` (via Groq) extracts plans from SIIS articles; `BAAI/bge-small-en-v1.5` produces embeddings for retrieval and the semantic cache.
+- **During development:** the code, documentation and presentation were developed with substantial help from an AI assistant (Claude by Anthropic). All code was run, tested and validated by the team.
