@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+.pytest_cache/
+*.pdf
+data/cache/
+data/index/
+outputs/*
+!outputs/results.jsonl
+!outputs/cache_benchmark.json
+!outputs/cold_benchmark.json
+!outputs/stress.json
+!outputs/ablation.json
