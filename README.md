@@ -103,7 +103,7 @@ data/                catalog, SIIS articles, inputs, held-out paraphrases
 
 ## Demo & Presentation
 
-- **Demo video:** [Watch on YouTube](<your-video-link>)
+- **Demo video:** [Watch The Demo Video](https://drive.google.com/drive/folders/14zz6nUbW4QdiiqaZ6nSY1Qao3EycsSfe?usp=drive_link)
 - **Presentation:** [docs/Smart_Guided_Troubleshooting_Engine.pptx](docs/Smart_Guided_Troubleshooting_Engine.pptx) ([PDF](docs/Smart_Guided_Troubleshooting_Engine.pdf))
 
 ## Run with Docker

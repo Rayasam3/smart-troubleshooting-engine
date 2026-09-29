@@ -13,3 +13,4 @@ outputs/*
 !outputs/cold_benchmark.json
 !outputs/stress.json
 !outputs/ablation.json
+~$*
