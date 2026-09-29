@@ -1,0 +1,105 @@
+{
+  "_readme": "Score each plan by hand. step_accuracy 0-3 (completeness, correctness, ordering); deeplink_relevance 0-2 (exact screen=2, parent menu=1, wrong=0).",
+  "scores": [
+    {
+      "input_line": 1,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 2,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 3,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 4,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 5,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 6,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 7,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 8,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 9,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 10,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 11,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 12,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 13,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 14,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 15,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 16,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 17,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 18,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 19,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    },
+    {
+      "input_line": 20,
+      "step_accuracy": null,
+      "deeplink_relevance": null
+    }
+  ]
+}

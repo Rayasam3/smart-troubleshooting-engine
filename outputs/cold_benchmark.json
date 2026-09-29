@@ -1,0 +1,10 @@
+{
+  "n": 20,
+  "p50_ms": 184.7,
+  "p95_ms": 5110.5,
+  "avg_cost_usd": 0.000155,
+  "avg_tokens": 444.6,
+  "fallbacks": 17,
+  "plans_with_rule_errors": 0,
+  "model": "openai/gpt-oss-120b"
+}

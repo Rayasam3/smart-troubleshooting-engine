@@ -1,0 +1,18 @@
+{
+  "A_ours": {
+    "rule_compliance": 1.0,
+    "p95_ms_cold": 5110.5,
+    "cost_per_query": 0.000155
+  },
+  "A_prime_top1_no_gate": {
+    "auto_actions": 7,
+    "same_link_as_ours": 2,
+    "top1_name_matches_no_screen_in_steps": 5
+  },
+  "B_rules": {
+    "rule_compliance": 1.0,
+    "p95_ms": 708.6,
+    "cost_per_query": 0.0,
+    "plans": 20
+  }
+}

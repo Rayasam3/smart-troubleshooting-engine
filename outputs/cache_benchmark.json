@@ -1,0 +1,124 @@
+{
+  "embedder": "st:BAAI/bge-small-en-v1.5",
+  "threshold": 0.85,
+  "margin": 0.02,
+  "exact": {
+    "n": 40,
+    "p50_ms": 0.1,
+    "p95_ms": 0.1
+  },
+  "paraphrase": {
+    "n": 60,
+    "p50_ms": 32.8,
+    "p95_ms": 39.3,
+    "threshold": 0.85,
+    "hit_rate": 0.863,
+    "same_article_hits": 0,
+    "wrong_plan_hits": 0,
+    "false_hits_on_uncached": 0,
+    "n_cached": 51,
+    "n_uncached": 9
+  },
+  "deterministic": true,
+  "sweep": [
+    {
+      "threshold": 0.7,
+      "hit_rate": 0.902,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 4,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.725,
+      "hit_rate": 0.902,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 4,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.75,
+      "hit_rate": 0.902,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 4,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.775,
+      "hit_rate": 0.902,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 3,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.8,
+      "hit_rate": 0.902,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 2,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.825,
+      "hit_rate": 0.882,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 1,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.85,
+      "hit_rate": 0.863,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 0,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.875,
+      "hit_rate": 0.725,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 0,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.9,
+      "hit_rate": 0.647,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 0,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.925,
+      "hit_rate": 0.255,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 0,
+      "n_cached": 51,
+      "n_uncached": 9
+    },
+    {
+      "threshold": 0.95,
+      "hit_rate": 0.137,
+      "same_article_hits": 0,
+      "wrong_plan_hits": 0,
+      "false_hits_on_uncached": 0,
+      "n_cached": 51,
+      "n_uncached": 9
+    }
+  ]
+}
