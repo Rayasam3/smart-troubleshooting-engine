@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guided Troubleshooting Console</title>
+<style>
+  :root {
+    --paper: #f4f1ea; --ink: #1d1c1a; --muted: #6b665c; --rule: #d6d0c3; --card: #fffdf8;
+    --auto: #0f766e; --manual: #b45309; --critical: #b91c1c;
+    --mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 var(--sans); }
+  header { padding: 28px 32px 18px; border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header h1 { margin: 0; font: 700 26px/1.1 var(--sans); letter-spacing: -0.02em; }
+  header h1 span { font-family: var(--mono); font-weight: 400; font-size: 13px; color: var(--muted); letter-spacing: 0; margin-left: 10px; }
+  #health { font: 12px var(--mono); color: var(--muted); }
+  main { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; min-height: calc(100vh - 80px); }
+  @media (max-width: 820px) { main { grid-template-columns: 1fr; } }
+  aside { padding: 24px 32px; border-right: 1px solid var(--rule); }
+  label { display: block; font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 6px; }
+  textarea { width: 100%; border: 1px solid var(--rule); background: var(--card); padding: 10px 12px; font: 14px/1.45 var(--sans); color: var(--ink); resize: vertical; border-radius: 2px; }
+  textarea:focus { outline: 2px solid var(--ink); outline-offset: -1px; }
+  button { margin-top: 14px; width: 100%; padding: 12px; border: 0; background: var(--ink); color: var(--paper); font: 600 14px var(--sans); cursor: pointer; border-radius: 2px; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .samples { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .samples a { font-size: 13px; color: var(--ink); text-decoration: none; border-left: 2px solid var(--rule); padding: 2px 0 2px 10px; cursor: pointer; }
+  .samples a:hover { border-color: var(--ink); }
+  section { padding: 24px 40px 48px; }
+  .meta { display: flex; gap: 22px; flex-wrap: wrap; font: 12px var(--mono); color: var(--muted); border-bottom: 1px dashed var(--rule); padding-bottom: 12px; margin-bottom: 20px; }
+  .meta b { color: var(--ink); font-weight: 600; }
+  .hit { color: var(--auto) !important; }
+  .goal { font: 600 13px var(--mono); color: var(--muted); margin: 0 0 4px; }
+  .title { font: 700 30px/1.15 var(--sans); letter-spacing: -0.02em; margin: 0 0 22px; }
+  .action { display: grid; grid-template-columns: 44px 1fr; background: var(--card); border: 1px solid var(--rule); border-left-width: 4px; margin-bottom: 14px; }
+  .action.auto { border-left-color: var(--auto); } .action.manual { border-left-color: var(--manual); } .action.critical { border-left-color: var(--critical); }
+  .num { font: 700 20px var(--mono); padding: 14px 0 0 12px; color: var(--muted); }
+  .body { padding: 14px 18px 16px 4px; }
+  .head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .name { font: 600 17px var(--sans); }
+  .cat { font: 600 10px var(--mono); text-transform: uppercase; letter-spacing: .1em; padding: 2px 7px; color: #fff; border-radius: 2px; }
+  .cat.auto { background: var(--auto); } .cat.manual { background: var(--manual); } .cat.critical { background: var(--critical); }
+  .desc { color: var(--muted); font-size: 14px; margin: 2px 0 10px; }
+  ol { margin: 0; padding-left: 20px; } li { margin: 3px 0; }
+  .link { margin-top: 12px; display: inline-flex; gap: 10px; align-items: center; font: 12px var(--mono); border: 1px solid var(--auto); color: var(--auto); padding: 5px 10px; border-radius: 2px; }
+  .link.placeholder { border-style: dashed; }
+  .link code { color: var(--muted); }
+  .empty { color: var(--muted); font-family: var(--mono); font-size: 13px; padding-top: 40px; }
+  .variations { margin-top: 28px; font-size: 13px; color: var(--muted); }
+  .variations summary { cursor: pointer; font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Guided Troubleshooting Console <span>/v1/troubleshoot</span></h1>
+  <div id="health">checking engine…</div>
+</header>
+<main>
+  <aside>
+    <label for="q">Customer complaint</label>
+    <textarea id="q" rows="4" placeholder="e.g. my screen is cracked and flickers"></textarea>
+    <label for="s">SIIS article (optional)</label>
+    <textarea id="s" rows="5" placeholder="Paste raw article text. Leave empty to answer from the cache."></textarea>
+    <button id="go">Build troubleshooting plan</button>
+    <label>Try an unseen paraphrase</label>
+    <div class="samples">
+      <a>phone screen fully cracked</a>
+      <a>My X1 responds late to my taps, the touchscreen feels really sluggish.</a>
+      <a>How do I get rid of the floating round button on my Nexa X1?</a>
+      <a>fold x1 half screen black</a>
+    </div>
+  </aside>
+  <section id="out"><div class="empty">A plan will appear here: numbered actions, least disruptive first, each with its one-tap Settings deeplink.</div></section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+async function health() {
+  try {
+    const r = await fetch("/health"); const j = await r.json();
+    $("health").textContent = r.ok ? "engine ready" : "engine " + j.status + "…";
+    if (!r.ok) setTimeout(health, 1500);
+  } catch { $("health").textContent = "server unreachable"; }
+}
+
+function render(data) {
+  const m = data.meta || {};
+  const meta = `<div class="meta">
+    <span>latency <b>${m.latency_ms} ms</b></span>
+    <span>cache <b class="${m.cache_hit ? "hit" : ""}">${m.cache_hit ? "HIT (" + (m.cache_match || "") + ")" : "miss"}</b></span>
+    <span>model <b>${esc(m.model)}</b></span>
+    <span>cost <b>$${(m.cost_usd || 0).toFixed(5)}</b></span>
+    ${m.fallback ? `<span>fallback <b>${esc(m.fallback)}</b></span>` : ""}</div>`;
+  const ctx = (data.response && data.response.contexts) || [];
+  if (!ctx.length) {
+    const why = m.fallback === "no_siis_context" ? "Not in the cache yet. Paste the SIIS article to build a new plan."
+              : "The reference article has no viable fix for this complaint, so no plan is invented.";
+    $("out").innerHTML = meta + `<div class="empty">${why}</div>`; return;
+  }
+  const g = ctx[0];
+  const actions = g.actions.map((a, i) => {
+    const grp = a.stepGroups[0] || {}; const dl = grp.actionableDeeplink;
+    const link = dl ? `<div class="link ${dl.originalType === "placeholder" ? "placeholder" : ""}">&#8599; ${esc(dl.message)} <code>${esc(dl.deeplink)}</code></div>` : "";
+    return `<div class="action ${a.category}"><div class="num">${String(i + 1).padStart(2, "0")}</div><div class="body">
+      <div class="head"><span class="name">${esc(a.actionName)}</span><span class="cat ${a.category}">${a.category}</span></div>
+      <div class="desc">${esc(a.description)}</div>
+      <ol>${(grp.steps || []).map((s) => `<li>${esc(s)}</li>`).join("")}</ol>${link}</div></div>`;
+  }).join("");
+  const vars = (data.query_variations || []).length
+    ? `<details class="variations"><summary>${data.query_variations.length} stored phrasings of this problem</summary><ul>${data.query_variations.map((v) => `<li>${esc(v)}</li>`).join("")}</ul></details>` : "";
+  $("out").innerHTML = meta + `<p class="goal">${esc(g.goal)}</p><h2 class="title">${esc(g.title)}</h2>` + actions + vars;
+}
+
+async function run() {
+  const query = $("q").value.trim(); if (!query) return;
+  const body = { query }; const siis = $("s").value.trim(); if (siis) body.siis_response = siis;
+  $("go").disabled = true; $("go").textContent = "Working…";
+  try {
+    const r = await fetch("/v1/troubleshoot", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    render(await r.json());
+  } catch (e) { $("out").innerHTML = `<div class="empty">Request failed: ${esc(e.message)}</div>`; }
+  finally { $("go").disabled = false; $("go").textContent = "Build troubleshooting plan"; }
+}
+
+$("go").onclick = run;
+document.querySelectorAll(".samples a").forEach((a) => a.onclick = () => { $("q").value = a.textContent; run(); });
+health();
+</script>
+</body>
+</html>
